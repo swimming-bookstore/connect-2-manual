@@ -238,12 +238,38 @@ fn page_path() -> String {
         .unwrap_or_default()
 }
 
+fn page_query() -> String {
+    window().location().search().ok().unwrap_or_default()
+}
+
+fn shot_mode() -> bool {
+    page_query().split('&').any(|part| {
+        let part = part.trim_start_matches('?');
+        part == "shot" || part.starts_with("shot=")
+    })
+}
+
+fn box_from_query(org: Org) -> Option<BoxId> {
+    page_query().split('&').find_map(|part| {
+        let part = part.trim_start_matches('?');
+        let name = part.strip_prefix("box=")?;
+        org.boxes().iter().copied().find(|id| id.name() == name)
+    })
+}
+
 #[component]
 fn App() -> impl IntoView {
     let org = RwSignal::new(Org::from_path(&page_path()));
-    let id = org.get_untracked().boxes()[0];
+    let id = box_from_query(org.get_untracked()).unwrap_or(org.get_untracked().boxes()[0]);
     let selected = RwSignal::new(id);
     let chat = RwSignal::new(Vec::new());
+    if shot_mode() {
+        if let Some(doc) = window().document() {
+            if let Some(el) = doc.document_element() {
+                let _ = el.class_list().add_1("shot");
+            }
+        }
+    }
 
     view! {
         <div class="app">
