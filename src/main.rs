@@ -262,7 +262,9 @@ fn App() -> impl IntoView {
     let org = RwSignal::new(Org::from_path(&page_path()));
     let id = box_from_query(org.get_untracked()).unwrap_or(org.get_untracked().boxes()[0]);
     let selected = RwSignal::new(id);
-    let chat = RwSignal::new(Vec::new());
+    // Card capture includes the Ask AI column. Keep the log empty so the
+    // shot does not invent a conversation that was never started.
+    let chat = RwSignal::new(Vec::<Line>::new());
     if shot_mode() {
         if let Some(doc) = window().document() {
             if let Some(el) = doc.document_element() {

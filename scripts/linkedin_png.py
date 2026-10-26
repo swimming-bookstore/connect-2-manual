@@ -30,7 +30,9 @@ OUT = ROOT / "docs"
 BASE = os.environ.get("MANUAL_URL", "http://127.0.0.1:8081")
 
 # window-size is the outer size. --app has no tab strip, so the page is this tall.
-WIN_W, WIN_H = 1120, 1160
+# The desk is laid out at 1280px, then scaled into the card. A narrower window
+# makes that 1280px box shrink, which leaves a white strip on the right.
+WIN_W, WIN_H = 1400, 1160
 
 PAGES = (
     (f"{BASE}/?shot=1&box=cardano-node-1", "linkedin-cardano.png", "cardano-node-1"),

@@ -534,8 +534,11 @@
   html.shot .ai-title { font-size: 14px; }
 
   @media (max-width: 980px) {
-    .bar, .desk { grid-template-columns: 1fr; }
-    .side, .bar .slot:first-child, .bar .slot:last-child { display: none; }
+    html:not(.shot) .bar,
+    html:not(.shot) .desk { grid-template-columns: 1fr; }
+    html:not(.shot) .side,
+    html:not(.shot) .bar .slot:first-child,
+    html:not(.shot) .bar .slot:last-child { display: none; }
     .doc { padding: 36px 22px 72px; }
     h1 { font-size: 32px; }
     .facts th { width: 7.5rem; }
