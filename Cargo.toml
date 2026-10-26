@@ -1,0 +1,14 @@
+[package]
+name = "connect-2-manual"
+version = "0.1.0"
+edition = "2021"
+description = "Static Connect 2 instance-manual page"
+license = "MIT"
+
+[[bin]]
+name = "connect-2-manual"
+path = "src/main.rs"
+
+[dependencies]
+leptos = { version = "0.7.8", features = ["csr"] }
+console_error_panic_hook = "0.1"
